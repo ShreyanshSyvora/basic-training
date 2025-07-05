@@ -1,0 +1,100 @@
+// Problem 1: Complete the secondLargest function which takes in an array of numbers in input and return the second biggest number in the array. (without using sort)?
+function secondLargest(array) {
+  let max = 0;
+  let secMax = 0;
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] > max) {
+      max = array[i];
+    } else if (array[i] < max && array[i] > secMax) {
+      secMax = array[i];
+    }
+  }
+  return secMax;
+}
+
+// Problem 2: Complete the calculateFrequency function that takes lowercase string as input and returns frequency of all english alphabet. (using only array, no in-built function)
+function calculateFrequency(string) {
+  let count = new Array(26);
+
+  for (let i = 0; i < 26; i++) {
+    count[i] = 0;
+  }
+
+  for (let i = 0; i < string.length; i++) {
+    let ch = string[i];
+    let index = string.charCodeAt(i) - 97;
+
+    if (index >= 0 && index < 26) {
+      count[index] = count[index] + 1;
+    }
+  }
+
+  let result = {};
+  for (let i = 0; i < 26; i++) {
+    if (count[i] > 0) {
+      let letter = String.fromCharCode(i + 97);
+      result[letter] = count[i];
+    }
+  }
+
+  return result;
+}
+
+// Problem 3: Complete the flatten function that takes a JS Object, returns a JS Object in flatten format (compressed)
+function flatten(unflatObject) {
+  let result = {};
+  let stack = [{ curr: unflatObject, path: "" }];
+
+  while (stack.length > 0) {
+    let top = stack.pop();
+    let current = top.curr;
+    let currentPath = top.path;
+
+    for (let key in current) {
+      let newPath = currentPath === "" ? key : currentPath + "." + key;
+
+      if (typeof current[key] === "object" && current[key] !== null) {
+        stack.push({ curr: current[key], path: newPath });
+      } else {
+        result[newPath] = current[key];
+      }
+    }
+  }
+
+  return result;
+}
+
+// Problem 4: Complete the unflatten function that takes a JS Object, returns a JS Object in unflatten format
+function unflatten(flatObject) {
+  let output = {};
+
+  let flatKeys = Object.keys(flatObject);
+
+  for (let i = 0; i < flatKeys.length; i++) {
+    let compositeKey = flatKeys[i];
+    let value = flatObject[compositeKey];
+    let parts = compositeKey.split(".");
+
+    let container = output;
+
+    for (let j = 0; j < parts.length; j++) {
+      let part = parts[j];
+      let next = parts[j + 1];
+      let isFinal = j === parts.length - 1;
+
+      let treatAsArray =
+        !isFinal && !isNaN(next) && parseInt(next, 10).toString() === next;
+
+      if (isFinal) {
+        container[part] = value;
+      } else {
+        if (!(part in container)) {
+          container[part] = treatAsArray ? [] : {};
+        }
+        container = container[part];
+      }
+    }
+  }
+
+  return output;
+}
