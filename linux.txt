@@ -1,0 +1,91 @@
+1. Create a folder named sample in your home directory.
+mkdir sample
+
+2. Inside the sample folder, create a file named sample.txt.
+cd sample
+touch sample.txt
+
+3. Add the following content to the file:
+ Hi! This is just a sample text file created using a shell script.
+
+echo 'Hi! This is just a sample text file created using a shell script.' > sample.txt
+
+4. Print the contents of the file.
+cat sample.txt
+
+5. Print the number of occurrences of the letter ‘t’ in sample.txt.
+grep -i -o 't' sample.txt | wc -l
+
+6. Change the owner’s permissions to allow read, write, and execute access.
+chmod u+rwx sample.txt
+
+7. Append this line to sample.txt:
+ Hi! This is just another sample text added to the file.
+
+ echo ' Hi! This is just another sample text added to the file.' >> sample.txt
+
+8. Change the group permissions to allow read-only access.
+chmod g=r sample.txt 
+
+9. Change others’ (all users) permissions to deny any access to sample.txt.
+chmod o= sample.txt 
+
+10. Create another file named sample2.txt with the same content as sample.txt.
+touch sample2.txt
+cat sample.txt >> sample2.txt
+
+11. Add 1000 random lines to sample.txt.
+for i in $(seq 1 1000); do
+    echo "This is line number $i" >> sample.txt
+done
+
+12. Print the top 50 lines of the file.
+head -n 50 sample.txt
+
+13. Print the bottom 50 lines of the file.
+tail -n 50 sample.txt
+
+14. In the sample folder, create 5 files named:
+ prog1.txt, prog2.txt, program.txt, code.txt, info.txt
+
+touch prog1.txt
+touch prog2.txt
+touch program.txt
+touch code.txt
+touch info.txt
+
+15. Write a command to list all files that contain "prog" in their names.
+ls | grep "prog"
+
+16. Create an alias for the command in step 15 so that the following works: list prog
+alias list="ls | grep"
+
+- Add your answers to these in the same document:
+
+1. What is the difference between source and sh commands?
+Source - Changes persist, execute in same shell
+sh - Changes do not persist, executes in a new shell
+
+2. Create two files a.txt and b.txt. Write a command to find the difference between their contents.
+diff a.txt b.txt
+
+3. What is the difference between ls and lsof?
+ls - lists all the files and directories in a directory , used to view the overall file structure 
+lsof - list all the opened files which are accessed by certain process , used to view file access by the processes
+
+4. Write a single mkdir command to create nested directories: ./hello/world (neither should exist already).
+mkdir -p ./hello/world
+
+5. How can you permanently set an environment variable in bash?
+export MY_VAR=value   //for just temporary
+~/.bashrc
+
+6. A process is running on a port in your system. How can you:
+View which process is using the port?
+Kill that process from the terminal?
+
+To view :
+lsof -i :<PORT_NO> //where 8080 is a port number
+
+To Kill:
+kill -9 <PID>
